@@ -19,7 +19,7 @@ def token(request):
 
         error_message = Response(
             error_msg_body, 
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
         )
 
         return error_message
@@ -82,7 +82,7 @@ def token(request):
 
         error_message = Response(
             error_msg_body, 
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_401_UNAUTHORIZED
         )
 
         return error_message
@@ -149,7 +149,7 @@ def resource(request):
 
             error_message = Response(
                 error_msg_body, 
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_401_UNAUTHORIZED
             )
 
             return error_message
@@ -162,7 +162,7 @@ def resource(request):
 
         error_message = Response(
             error_msg_body, 
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_401_UNAUTHORIZED
         )
 
         return error_message
