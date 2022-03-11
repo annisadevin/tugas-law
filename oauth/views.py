@@ -1,11 +1,13 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 from .serializers import *
 from .models import *
 from django.utils import timezone
-import secrets
 import datetime
-from rest_framework import status
+import random
+import hashlib
+import string
 
 @api_view(['POST'])
 def token(request):
@@ -96,11 +98,15 @@ def field_getter(request):
     
 
 def generate_token(session_id):
-    gen_access_token = secrets.token_hex(nbytes=20)
-    gen_refresh_token = secrets.token_hex(nbytes=20)
+    letters = string.ascii_letters
+    random_string = ''.join(random.choice(letters) for i in range(39)).encode()
+    random_string2 = ''.join(random.choice(letters) for i in range(39)).encode()
     
-    access_token = gen_access_token[:39] + str(session_id)[-1]
-    refresh_token = gen_refresh_token[:39] + str(session_id)[-1]
+    gen_access_token = hashlib.sha1(random_string).hexdigest()
+    gen_refresh_token = hashlib.sha1(random_string2).hexdigest()
+    
+    access_token = gen_access_token[:-1] + str(session_id)[-1]
+    refresh_token = gen_refresh_token[:-1] + str(session_id)[-1]
     return [access_token, refresh_token]
 
 
